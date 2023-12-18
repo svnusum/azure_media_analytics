@@ -29,7 +29,9 @@ if __name__ == "__main__":
         sas_url = f"{blob_client.url}?{sas_token}"
         #print(sas_url)
         transcribe_op = transcribe(sas_url)
-        print(transcribe_op)
+        #print(transcribe_op)
+        st.write(transcribe_op)
 
     response_fn_test = open_ai_chat(['''sentence is  - ''' + '''"''' + transcribe_op + '''"'''+ '''.'''])
-    print(response_fn_test)
+    #print(response_fn_test)
+    st.write(response_fn_test)
