@@ -1,0 +1,10 @@
+{
+    
+    "STORAGE_ACCOUNT_NAME":"nseitmediaanalytics",
+    "CONTAINER_NAME":"media-files",
+    "SPEECH_SERVICE_REGION":"eastus",
+    "OPEN_AI_API_TYPE":"azure",
+    "AZURE_OPEN_AI_DEPLOYMENT_NAME":"gpt-35-turbo",
+    "AZURE_OPEN_AI_API_VERSION":"2023-03-15-preview"
+
+}
