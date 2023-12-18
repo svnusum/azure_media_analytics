@@ -13,3 +13,5 @@ share
 Dockerfile
 
 docker.env
+
+media-analytics
