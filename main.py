@@ -93,14 +93,14 @@ if __name__ == "__main__":
 
         #cosmos_db_insert(results_items)
 
-        txt = st.text_area(
-                            "Ask questions related to the transcription below",
-                            "",
-                            )
-        if txt == '':
-            exit(0)
-        else:
-            own_prompt = '''You are a question answering bot. Answer the questions asked by the user about the provided text input. 
-                            STRICTLY ANSWER OR RESPOND to questions only related to provided text input.
-                            reply with 'I Cannot help with that request' if anything is asked outside the provided input'''
-            own_prompt_response = open_ai_chat(own_prompt, ['''Text input is  - ''' + '''"''' + transcribe_op + '''"''' + '''.'''])
+        #txt = st.text_area(
+        #                    "Ask questions related to the transcription below",
+        #                    "",
+        #                    )
+        #if txt == '':
+        #    exit(0)
+        #else:
+        #    own_prompt = '''You are a question answering bot. Answer the questions asked by the user about the provided text input. 
+        #                    STRICTLY ANSWER OR RESPOND to questions only related to provided text input.
+        #                    reply with 'I Cannot help with that request' if anything is asked outside the provided input'''
+        #    own_prompt_response = open_ai_chat(own_prompt, ['''Text input is  - ''' + '''"''' + transcribe_op + '''"''' + '''.'''])
