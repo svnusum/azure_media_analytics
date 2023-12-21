@@ -10,8 +10,6 @@ etc
 
 share
 
-Dockerfile
-
 docker.env
 
 media-analytics

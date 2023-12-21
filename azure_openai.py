@@ -20,19 +20,10 @@ AZURE_OPEN_AI_DEPLOYMENT_NAME = config_details['AZURE_OPEN_AI_DEPLOYMENT_NAME']
 
 
 
-PROMPT = """
-You will be acting as an agent who can fetch details from a given text input
-Here are 4 critical rules for the interaction you must abide:
-<rules>
-1. For each stock being recommended You MUST fetch details like speaker_name,stock_name,stock symbol,stock buy or sell, target price, stop loss price
-2. If any of the above detail is not present for any stock return 'NA' for that field
-3. DO NOT put numerical at the very front of output.
-4. You MUST return the output in csv format with all the collected details
-</rules>
-"""
 
 
-def open_ai_chat(user_assistant):
+
+def open_ai_chat(prompt,user_assistant):
 
     # This is set to `azure`
     openai.api_type = OPEN_AI_API_TYPE
@@ -44,7 +35,7 @@ def open_ai_chat(user_assistant):
     openai.api_version = AZURE_OPEN_AI_API_VERSION
     
     assert isinstance(user_assistant, list), "`user_assistant` should be a list"
-    system_msg = [{"role": "system", "content": PROMPT}]
+    system_msg = [{"role": "system", "content": prompt}]
 
     user_assistant_msgs = [
       {"role": "assistant", "content": user_assistant[i]} if i % 2 else {"role": "user", "content": user_assistant[i]}
