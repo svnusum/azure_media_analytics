@@ -11,6 +11,10 @@ import os
 from file_processing import download_and_upload_file,create_service_sas_blob
 from azure_openai import open_ai_chat
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 
 with open(r'config.json') as config_file:

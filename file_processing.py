@@ -6,8 +6,14 @@ from azure.storage.blob import BlobServiceClient, BlobClient, generate_blob_sas,
 from moviepy.editor import *
 import json
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 with open(r'config.json') as config_file:
     config_details = json.load(config_file)
+
+
 
 STORAGE_ACCOUNT_NAME = config_details['STORAGE_ACCOUNT_NAME']
 CONTAINER_NAME = config_details['CONTAINER_NAME']

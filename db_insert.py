@@ -1,6 +1,9 @@
 import os
 from azure.cosmos import CosmosClient
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 COSMOS_DB_ENDPOINT = os.getenv("COSMOS_DB_ENDPOINT")
 COSMOS_DB_AUTH_KEY = os.getenv("COSMOS_DB_AUTH_KEY")

@@ -4,6 +4,10 @@ import json
 import streamlit as st
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 with open(r'config.json') as config_file:
     config_details = json.load(config_file)
 

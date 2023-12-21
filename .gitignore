@@ -10,6 +10,6 @@ etc
 
 share
 
-docker.env
+.env
 
 media-analytics
