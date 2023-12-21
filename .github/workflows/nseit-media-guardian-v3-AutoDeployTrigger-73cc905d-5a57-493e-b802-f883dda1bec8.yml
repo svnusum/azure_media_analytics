@@ -1,0 +1,46 @@
+name: Trigger auto deployment for nseit-media-guardian-v3
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/nseit-media-guardian-v3-AutoDeployTrigger-73cc905d-5a57-493e-b802-f883dda1bec8.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.NSEITMEDIAGUARDIANV3_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.NSEITMEDIAGUARDIANV3_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.NSEITMEDIAGUARDIANV3_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: nseitmediaanalyticsind.azurecr.io
+          registryUsername: ${{ secrets.NSEITMEDIAGUARDIANV3_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.NSEITMEDIAGUARDIANV3_REGISTRY_PASSWORD }}
+          containerAppName: nseit-media-guardian-v3
+          resourceGroup: DnA_AI_CoPilot
+          imageToBuild: nseitmediaanalyticsind.azurecr.io/nseit-media-guardian-v3:${{ github.sha }}
+          
+
+
