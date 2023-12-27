@@ -27,7 +27,7 @@ STORAGE_ACCOUNT_SHARED_ACCESS_KEY = os.getenv("STORAGE_ACCOUNT_SHARED_ACCESS_KEY
 prompt_1 = """
 create a transcription summary with respect to stock recommendations in shared transcript.
 only include the stocks,stock_symbol, buy or sell recommendations also identify who suggested it,stop loss and target price.
-Return a single line for each stock.
+Return a single line for each stock. If there are not stocks recommended just return - 'No stocks recommended'
 
 """
 
@@ -38,11 +38,12 @@ You will be acting as an agent who can fetch details from a given text input
 Here are 4 critical rules for the interaction you must abide:
 <rules>
 1. For each stock being recommended You MUST fetch details like speaker_name,stock_name,stock symbol,stock buy or sell, target price, stop loss price
-2. If any of the above detail is not present for any stock return 'NA' for that field
-3. DO NOT put numerical at the very front of output.
-4. You MUST return the output in csv format with all the collected details
-5. If a range is mentioned for price then pick the higher value
-6. Strictly do not use commas while representing numbers
+2. Please identify Indian names as well
+3. If any of the above detail is not present for any stock return 'NA' for that field
+4. DO NOT put numerical at the very front of output.
+5. You MUST return the output in csv format with all the collected details
+6. If a range is mentioned for price then pick the higher value
+7. Strictly do not use commas while representing numbers
 
 </rules>
 
