@@ -1,10 +1,14 @@
 import streamlit as st
 from pytube import YouTube
 import os
-import datetime
+from datetime import datetime,timezone,timedelta
 from azure.storage.blob import BlobServiceClient, BlobClient, generate_blob_sas, BlobSasPermissions
 from moviepy.editor import *
 import json
+import pandas as pd
+import easyocr
+import cv2
+import shutil
 
 from dotenv import load_dotenv
 
@@ -41,8 +45,8 @@ def upload_blob_file(blob_service_client: BlobServiceClient, container_name: str
 def create_service_sas_blob(blob_client: BlobClient,account_key: str):
     # Create a SAS token that's valid for one day, as an example
 
-    utc_now = datetime.datetime.now(datetime.timezone.utc)
-    utc_later = utc_now + datetime.timedelta(minutes=20)
+    utc_now = datetime.now(timezone.utc)
+    utc_later = utc_now + timedelta(minutes=20)
 
 # Format the UTC time as a string
     start_time = utc_now.strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -84,3 +88,68 @@ def download_and_upload_file(video_link):
     print("file uploaded!")
     os.remove(mp3_file_name)
     return blob_client,mp3_file_name
+
+
+def video_download(video_link):
+
+    print("downloading video")
+    video = YouTube(video_link)
+    data_stream = video.streams.filter(progressive=True,file_extension = "mp4").first()
+    data_stream.download()
+    video_file_name = data_stream.default_filename
+
+    return video_file_name
+
+def extract_video_frames(video_file_name):
+
+    current_directory = os.getcwd()
+    frames_directory = os.path.join(current_directory, r'frames')
+    if os.path.exists(frames_directory) and os.path.isdir(frames_directory):
+        shutil.rmtree(frames_directory)
+    if not os.path.exists(frames_directory):
+        os.makedirs(frames_directory)
+
+    print("extracting frames from video")
+    vidcap = cv2.VideoCapture(video_file_name)
+    fps = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
+    print(fps)
+    output = pd.DataFrame()
+    count = 0
+    success = True
+    assert vidcap.isOpened()
+    while success:
+        vidcap.set(cv2.CAP_PROP_POS_MSEC,(count*3000))
+        success,image = vidcap.read()
+        if not success: break
+        frame_time = str(datetime.now()).split()[1]
+        cv2.imwrite(os.path.join(frames_directory,'frame%d.jpg'%count),image)
+        dict_1 = {'file_name':'frame%d.jpg'%count, 'frame_time':frame_time}
+        output = pd.concat([output, pd.DataFrame([dict_1])], ignore_index=True)
+        count = count + 1    
+    vidcap.release()
+    os.remove(video_file_name)
+    print('Successfully Completed')
+    print(output)
+    return output,frames_directory
+
+def extract_text_from_frames(output,frames_directory):
+
+    frame_texts=[]
+    for filename in output['file_name'].to_list():
+        #print(filename)
+        reader = easyocr.Reader(['en'])
+        result = reader.readtext(os.path.join(frames_directory,filename))
+        text = ' '
+        for i in result:
+            text += i[1] + " "
+        frame_texts.append(text)
+    return frame_texts
+
+if __name__ == "__main__":
+
+    #video_link = 'https://www.youtube.com/watch?v=ry2_cFPewVM'
+    video_link = 'https://www.youtube.com/watch?v=8OFZUeij1cM'
+    video_file_name = video_download(video_link)
+    output,frames_directory = extract_video_frames(video_file_name)
+    frame_texts = extract_text_from_frames(output,frames_directory)
+    print(frame_texts)
