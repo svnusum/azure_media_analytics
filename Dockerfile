@@ -21,13 +21,6 @@ RUN unzip ./python-client-generated.zip
 
 RUN pip3 install ./python-client-generated/python-client/
 
-RUN wget https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/english_g2.zip
-RUN wget https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip
-RUN mkdir ./.EasyOCR
-RUN mkdir ./.EasyOCR/model
-RUN unzip english_g2.zip -d ./.EasyOCR/model
-RUN unzip craft_mlt_25k.zip -d ./.EasyOCR/model
-
 EXPOSE 8501
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
