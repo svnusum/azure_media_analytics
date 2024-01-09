@@ -103,7 +103,7 @@ def video_download(video_link):
 def extract_video_frames(video_file_name):
 
     current_directory = os.getcwd()
-    frames_directory = os.path.join(current_directory, r'frames')
+    frames_directory = os.path.join(current_directory, f'{video_file_name}_frames')
     if os.path.exists(frames_directory) and os.path.isdir(frames_directory):
         shutil.rmtree(frames_directory)
     if not os.path.exists(frames_directory):
@@ -144,6 +144,10 @@ def extract_text_from_frames(output,frames_directory):
         for i in result:
             text += i[1] + " "
         frame_texts.append(text)
+
+    if os.path.exists(frames_directory) and os.path.isdir(frames_directory):
+        shutil.rmtree(frames_directory)
+        
     return frame_texts
 
 if __name__ == "__main__":

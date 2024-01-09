@@ -61,14 +61,13 @@ Here are the critical rules for the interaction you must abide:
 <rules>
 1.) using the audio and video transcription, for each stock being recommended You MUST fetch details like 
     speaker_name,stock_name,stock symbol,stock buy or sell, target price, stop loss price.
-2.) strictly consider video transcription to be more accurate while generating the output. 
-3.) you must look for information from audio transcription ONLY if any detail is missing from video transcription 
-4.) do not mention audio/video in output
-5.) If any of the above detail is not present for any stock return 'NA' for that field
-6.) DO NOT put numerical at the very front of output.
-7.) You MUST return the output in csv format with all the collected details
-8.) If a range is mentioned for price then pick the higher value
-9.) Strictly do not use commas while representing numbers
+2.) cross check person names and stock names between audio and video transcription. 
+3.) do not mention audio/video in output
+4.) If any of the above detail is not present for any stock return 'NA' for that field
+5.) DO NOT put numerical at the very front of output.
+6.) You MUST return the output in csv format with all the collected details
+7.) If a range is mentioned for price then pick the higher value
+8.) Strictly do not use commas while representing numbers
 
 </rules>
 
@@ -128,12 +127,12 @@ if __name__ == "__main__":
             st.write(str(frame_texts))
         
         with st.spinner('Generating summary from text in video...'):
-            prompt_1_resp = open_ai_chat(prompt_1, ['''Input is  - ''' + '''"''' + str(frame_texts) + '''"''' + '''.'''])
+            prompt_1_resp_txt = open_ai_chat(prompt_1, ['''Input is  - ''' + '''"''' + str(frame_texts) + '''"''' + '''.'''])
         with st.expander("Video text summary"):
-            st.write(prompt_1_resp)
+            st.write(prompt_1_resp_txt)
 
         with st.spinner('Generating output based on audio and video text summary...'):
-            prompt_3_resp = open_ai_chat(prompt_3, ['''video transcription - ''' + '''"''' + str(frame_texts) + '''"''' + '''. \n \n '''\
+            prompt_3_resp = open_ai_chat(prompt_3, ['''video transcription - ''' + '''"''' + prompt_1_resp_txt + '''"''' + '''. \n \n '''\
                                                     + '''audio transcription - ''' + '''"''' + prompt_1_resp + '''"''' + '''.''' ])
         #with st.expander("collated audio & video data"):
         #    st.write(prompt_3_resp)
