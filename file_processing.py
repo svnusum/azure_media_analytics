@@ -137,7 +137,8 @@ def extract_text_from_frames(output,frames_directory):
     frame_texts=[]
     for filename in output['file_name'].to_list():
         #print(filename)
-        reader = easyocr.Reader(['en'])
+        #reader = easyocr.Reader(['en'])
+        reader = easyocr.Reader(['en'],download_enabled=False ,model_storage_directory="./.EasyOCR/model")
         result = reader.readtext(os.path.join(frames_directory,filename))
         text = ' '
         for i in result:
