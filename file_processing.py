@@ -9,7 +9,7 @@ import pandas as pd
 import easyocr
 import cv2
 import shutil
-
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -98,17 +98,19 @@ def video_download(video_link):
     data_stream.download()
     video_file_name = data_stream.default_filename
 
+    #video_file_name = video_file_name.replace("´","")
+
     return video_file_name
 
 def extract_video_frames(video_file_name):
 
     current_directory = os.getcwd()
+    #pro_video_file_name = re.escape(video_file_name)
     frames_directory = os.path.join(current_directory, f'{video_file_name}_frames')
     if os.path.exists(frames_directory) and os.path.isdir(frames_directory):
         shutil.rmtree(frames_directory)
     if not os.path.exists(frames_directory):
         os.makedirs(frames_directory)
-
     print("extracting frames from video")
     vidcap = cv2.VideoCapture(video_file_name)
     fps = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -147,13 +149,13 @@ def extract_text_from_frames(output,frames_directory):
 
     if os.path.exists(frames_directory) and os.path.isdir(frames_directory):
         shutil.rmtree(frames_directory)
-        
+
     return frame_texts
 
 if __name__ == "__main__":
 
     #video_link = 'https://www.youtube.com/watch?v=ry2_cFPewVM'
-    video_link = 'https://www.youtube.com/watch?v=8OFZUeij1cM'
+    video_link = 'https://www.youtube.com/watch?v=YsT-84HEysI&t=71s'
     video_file_name = video_download(video_link)
     output,frames_directory = extract_video_frames(video_file_name)
     frame_texts = extract_text_from_frames(output,frames_directory)
