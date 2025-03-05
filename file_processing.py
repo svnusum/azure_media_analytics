@@ -154,9 +154,9 @@ def extract_text_from_frames(output,frames_directory):
 
 if __name__ == "__main__":
 
-    #video_link = 'https://www.youtube.com/watch?v=ry2_cFPewVM'
-    video_link = 'https://www.youtube.com/watch?v=YsT-84HEysI&t=71s'
+    video_link = 'https://www.youtube.com/watch?v=ry2_cFPewVM'
+    #video_link = 'https://www.youtube.com/watch?v=YsT-84HEysI&t=71s'
     video_file_name = video_download(video_link)
     output,frames_directory = extract_video_frames(video_file_name)
-    frame_texts = extract_text_from_frames(output,frames_directory)
-    print(frame_texts)
+    #frame_texts = extract_text_from_frames(output,frames_directory)
+    #print(frame_texts)

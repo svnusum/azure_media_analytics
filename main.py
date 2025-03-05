@@ -62,15 +62,17 @@ Here are the critical rules for the interaction you must abide:
 <rules>
 1.) using the audio transcription, for each stock being recommended You MUST fetch details like 
     stock_name,stock symbol,stock buy or sell, target price, stop loss price.
-2.) For each stock specified in audio transcription , you must fetch the speaker name from video transcription
-3.) cross check person names and stock names between audio and video transcription. 
-4.) do not mention audio/video in output
-5.) If any of the above detail is not present for any stock return 'NA' for that field
-6.) DO NOT put numerical at the very front of output.
-7.) You MUST return the output in csv format with all the collected details
-8.) If a range is mentioned for price then pick the higher value
-9.) Strictly do not use commas while representing numbers
-10.) There SHOULD NOT BE any duplicates for same stock 
+2.) For each stock specified in audio transcription , you must fetch the speaker name from video transcription.
+    Fetch the speaker name from audio transcription ONLY IF IT IS NOT PRESENT in video transcription
+3.) Stock names must not be more than first input
+4.) cross check person names and stock names between audio and video transcription. 
+5.) do not mention audio/video in output
+6.) If any of the above detail is not present for any stock return 'NA' for that field
+7.) DO NOT put numerical at the very front of output.
+8.) You MUST return the output in csv format with all the collected details
+9.) If a range is mentioned for price then pick the higher value
+10.) Strictly do not use commas while representing numbers
+11.) There SHOULD NOT BE any duplicates for same stock 
 
 </rules>
 

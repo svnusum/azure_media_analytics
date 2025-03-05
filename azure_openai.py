@@ -62,3 +62,9 @@ def open_ai_chat(prompt,user_assistant):
     except openai.OpenAIError as e:
         # Handle API error here, e.g. retry or log
         print(f"OpenAI API returned an API Error: {e}")
+
+
+if __name__ == "__main__":
+
+  resp = open_ai_chat('tell me a joke',[''])
+  print(resp)

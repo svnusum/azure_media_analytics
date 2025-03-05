@@ -152,9 +152,12 @@ def transcribe(RECORDINGS_BLOB_URI):
     configuration = swagger_client.Configuration()
     configuration.api_key["Ocp-Apim-Subscription-Key"] = SPEECH_SERVICE_SUBSCRIPTION_KEY
     configuration.host = f"https://{SPEECH_SERVICE_REGION}.api.cognitive.microsoft.com/speechtotext/v3.1"
+    
     #configuration.host = "https://eastus.api.cognitive.microsoft.com/"
     # create the client object and authenticate
     client = swagger_client.ApiClient(configuration)
+
+    #api = swagger_client.CustomSpeechTranscriptionsApi(api_client=client)
 
     # create an instance of the transcription api class
     api = swagger_client.DefaultApi(api_client=client)
