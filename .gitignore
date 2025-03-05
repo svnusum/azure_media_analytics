@@ -17,3 +17,7 @@ media-analytics
 frames
 
 *_frames*
+
+vision.py
+
+vision_video_embed.py
