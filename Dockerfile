@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/svalluri93/nseit-media-analytics.git .
+RUN git clone https://github.com/svnusum/azure_media_analytics.git .
 
 RUN pip3 install -r requirements.txt
 
